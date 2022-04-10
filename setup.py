@@ -4,7 +4,7 @@ from setuptools import find_packages
 setup(
   name = 'face_hunters',         # How you named your package folder (MyLib)
   packages = find_packages(),   # Chose the same as "name"
-  version = '0.6.6',      # Start with a small number and increase it with every change you make
+  version = '0.6.7',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'This is an application developped by 4BIM INSA students to help you create a robot portait of your agressor.',   # Give a short description about your library
   author = 'G3',                   # Type in your name
