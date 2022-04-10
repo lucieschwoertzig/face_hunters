@@ -4,7 +4,6 @@ import pandas as pds
 import matplotlib.pyplot as plt
 from PIL import ImageTk, Image
 import random
-import evolutionary
 import os
 
 
@@ -16,12 +15,20 @@ characteristics={"woman":False,"man":False,"young":False,"old":False,"beard":Fal
 
 
 def initialize() :
+    """ This function allows to put all the agressor's characteristics to 'False'.
+
+    """
     for cle, valeur in characteristics.items() :
         characteristics[cle]=False
     #print(characteristics)
 
 
 def onClick(event):
+
+    """ This function allows to generate a new interface to ask and store the characteristics of the agressor.
+
+    """
+
     for c in myWindow.winfo_children():
         c.destroy()
     initialize()
@@ -63,39 +70,58 @@ def onClick(event):
     myButton.bind('<ButtonRelease-1>',sex_characteristics)
 
 def fevent(event):
+    """This function is for choosing the gender which is 'woman' not 'man'.
+    """
+
     characteristics["woman"]=True
     characteristics["man"]=False
 
 def hevent(event):
+    """This function is for choosing the gender which is 'man' not 'woman'.
+    """
     characteristics["man"]=True
     characteristics["woman"]=False
 
 def yevent(event):
+    """This function is for choosing the age group which is 'young' not 'old'.
+    """
     characteristics["young"]=True
     characteristics["old"]=False
 
 def oevent(event):
+    """This function is for choosing the age group which is 'old' not 'young'.
+    """
     characteristics["old"]=True
     characteristics["young"]=False
 
 def bevent(event):
+    """This function is for choosing the characteristic for man which is 'beard' not 'no beard'.
+    """
     characteristics["beard"]=True
     characteristics["no_beard"]=False
 
 def nbevent(event):
+    """This function is for choosing the characteristic for man which is 'no beard' not 'beard'.
+    """
     characteristics["no_beard"]=True
     characteristics["beard"]=False
 
 def sevent(event):
+    """This function is for choosing the characteristic for woman which is 'straight hair' not 'wavy hair'.
+    """
     characteristics["straight"]=True
     characteristics["no_straight"]=False
 
 def nsevent(event):
+    """This function is for choosing the characteristic for woman which is 'wavy hair' not 'straight hair'.
+    """
     characteristics["no_straight"]=True
     characteristics["straight"]=False
 
 def sex_characteristics(event):
-
+    """This function is for asking the characteristic for each gender.
+       'beard' or 'no beard' for man and 'straight hair' or 'wavy hair' for woman.
+    """
     if characteristics["man"]==True:
         mainFrame=tkinter.Frame(myWindow,bg='LightSkyBlue3',width=30, borderwidth=3, relief='groove')
         mainFrame.pack(side='top', padx=30, pady=30,fill="x" )
@@ -128,7 +154,7 @@ def sex_characteristics(event):
         sButton.pack(side='left', padx=5, pady=5)
         sButton.bind('<Button-1>', sevent)
 
-        nsButton=tkinter.Radiobutton(Frame4,text="No Straight Hair",variable=value, value=2)
+        nsButton=tkinter.Radiobutton(Frame4,text="Wavy Hair",variable=value, value=2)
         nsButton.pack(side='right', padx=5, pady=5)
         nsButton.bind('<Button-1>', nsevent)
 
@@ -138,6 +164,14 @@ def sex_characteristics(event):
 
 #base de données correspondant aux critères
 def choice_database(char):
+    """This function is for returning the images according to the user's selection.
+
+        Args :
+            char : characteristic for the aggressor.
+
+        Returns :
+            returns the vector according to the user's selection.
+    """
     if char["woman"] and char["young"] and char["straight"]:
         return 'images/img_female_young_straight.csv.npy'
     if char["woman"] and char["young"] and char["no_straight"]:
@@ -160,6 +194,8 @@ def choice_database(char):
 
 
 def reselect(event) :
+    """This function is about asking the user for selecting the gender or characteristic when he/she did not clicked the button.
+    """
     for c in myWindow.winfo_children():
         c.destroy()
     mainFrame=tkinter.Frame(myWindow,bg='LightSkyBlue3',width=30, borderwidth=3, relief='groove')
@@ -173,6 +209,8 @@ def reselect(event) :
 ##PRESENTATION DE LA POPULATION INITIAL
 
 def inital_population(event):
+    """This function is for showing the initial 10 pictures of the suspects according to the user's choice.
+    """
     database=choice_database(characteristics)
     if database == None:
         print('Im in none')
@@ -254,6 +292,16 @@ def inital_population(event):
 ###### PRESENT CHILDREN
 
 def chooseimage(pop, parent, nb_children) :
+    """This function generates a new interface for asking the user whether he/she recognizes the suspects.
+
+        Args :
+            pop : array of the encoded images\n
+            parent : selected array of the encoded image chosen by the user\n
+            nb_children(int) : the number of children generated from the parent\n
+
+        Returns :
+            None
+    """
     for c in myWindow.winfo_children():
         c.destroy()
     tkinter.Label(myWindow,bg='LightSkyBlue3',text='Do you recognise one of the suspects ?',font=(10)).pack(padx=10,pady=10,fill="x")
@@ -289,12 +337,54 @@ def chooseimage(pop, parent, nb_children) :
     imLab4.place(relx=0.7, rely=0.65, anchor="center")
     imLab4.bind('<Button-1>', lambda event, photo=photo[3], pop=pop, parent=new_pop[3], nb_children=4: end_or_continue(photo, pop, parent, nb_children))
 
+    pause=tkinter.Button(myWindow,text='Need a break ?', width=30, bg='LightSkyBlue4', font=(1))
+    pause.place(relx=0.5, rely=0.9, anchor="center")
+    pause.bind('<Button-1>', lambda event, pop=pop, parent=parent, nb_children=4: break_time(pop, parent, nb_children))
+
     myWindow.mainloop()
 
+def break_time(pop, parent, nb_children):
+    """This function offers the user a break time with a peaceful picture wtih cute Koala.
+       The user can have the break time whenever he/she wants it.
+
+       Args:
+            pop : array of the encoded images\n
+            parent : selected array of the encoded image chosen by the user\n
+            nb_children(int) : the number of children generated from the parent\n
+
+       Returns:
+            None
+    """
+
+    for c in myWindow.winfo_children():
+        c.destroy()
+    Frame=tkinter.Frame(myWindow,borderwidth=3, relief='groove')
+    Frame.pack(side='top', padx=10, pady=20,expand="yes",fill="both")
+
+        #place(relx=0.5, rely=0.1, anchor="center",fill='x')
+
+    global impause
+    impause = ImageTk.PhotoImage(file = "reposant.jpg")
+    tkinter.Label(Frame,image=impause).pack()
+    continuebutton=tkinter.Button(Frame,text='Continue', width=30, bg='LightSkyBlue4', font=(1))
+    continuebutton.place(relx=0.5, rely=0.85, anchor="center")
+    continuebutton.bind('<ButtonRelease-1>', lambda event, pop=pop, parent=parent, nb_children=4 : chooseimage(pop, parent, nb_children))
 
 ### End loop or continue
 
 def end_or_continue(photo, pop, parent, nb_children):
+    """This function generates a new interface for asking the user whether he/she found the suspect.
+        It also asks the user if he/she wants other pictures of suspects.
+
+        Arg :
+            photo : photo of the selected parent
+            pop : array of the encoded images\n
+            parent : selected array of the encoded image chosen by the user\n
+            nb_children(int) : the number of children generated from the parent\n
+
+        Returns :
+            None
+    """
 
     for c in myWindow.winfo_children():
         c.destroy()
@@ -319,6 +409,15 @@ def end_or_continue(photo, pop, parent, nb_children):
 ### CRIMINAL FOUND
 
 def found_agressor(photo):
+    """ This function allows to generate the final interface showing the robot portrait of the agressor.
+
+    Args :
+        photo : the photo of the agressor\n
+
+    Returns :
+        None
+
+    """
     for c in myWindow.winfo_children():
         c.destroy()
     Frame=tkinter.Frame(myWindow,borderwidth=3, relief='groove')
@@ -363,20 +462,20 @@ if __name__=="__main__" :
     logo = ImageTk.PhotoImage(file = "logo_insa.png")
     tkinter.Label(Frame,image=logo).pack()
 
-    title= tkinter.Label(Frame,text='Project 4BIM',font=(20))
+    title= tkinter.Label(Frame,text='Face Hunters',font=(20))
     title.place(relx=0.5, rely=0.35, anchor="center")
 
-    descLabel=tkinter.Label(Frame, text='This is an application developped by 4BIM INSA students to help you create a robot portait of your agressor. \n The application will propose several faces, you just have to click on the photo to select it !  ')
+    descLabel=tkinter.Label(Frame, text='This is an application developped by 4BIM INSA students to help you create a robot portrait of your agressor. \n We will show you several faces, you just have to click on the photo to select it !  ')
     descLabel.place(relx=0.5, rely=0.5, anchor="center")
     #descLabel.pack()
 
     emoji1 = ImageTk.PhotoImage(file = "detective_fem.jpg")
-    tkinter.Label(Frame,image=emoji1).place(relx=0.4, rely=0.655, anchor="center")
+    tkinter.Label(Frame,image=emoji1).place(relx=0.4, rely=0.7, anchor="center")
     emoji2 = ImageTk.PhotoImage(file = "detective_hom.png")
-    tkinter.Label(Frame,image=emoji2).place(relx=0.6, rely=0.65, anchor="center")
+    tkinter.Label(Frame,image=emoji2).place(relx=0.6, rely=0.7, anchor="center")
 
     myButton=tkinter.Button(Frame,text='Start !', font=(10), width=50, bg="LightSteelBlue4")
-    myButton.place(relx=0.5, rely=0.8, anchor="center")
+    myButton.place(relx=0.5, rely=0.9, anchor="center")
     myButton.bind('<ButtonRelease-1>',onClick)
 
 
