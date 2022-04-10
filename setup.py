@@ -33,5 +33,5 @@ setup(
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
   ],
-  package_data={'face_hunters':['*.png', '*.jpg', '*.h5', '*.npy'], 'face_hunters':['*.jpg'], 'face_hunters.model':['*.h5'], 'face_hunters.images':['*.npy'], 'face_hunters.databases':['*.csv']},
+  package_data={'face_hunters':['*.png', '*.jpg', '*.h5', '*.npy']},
 )

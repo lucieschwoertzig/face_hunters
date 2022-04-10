@@ -101,8 +101,8 @@ if __name__=="__main__":
     #doctest.testmod(verbose=True)
 
 
-    decoder = load_model("model/decodeur.h5")
-    encoded_imgs=np.load("images/img_female_old_straight.csv.npy")
+    decoder = load_model("decodeur.h5")
+    encoded_imgs=np.load("img_female_old_straight.csv.npy")
 
 
 

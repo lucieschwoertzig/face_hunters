@@ -4,6 +4,7 @@ import pandas as pds
 import matplotlib.pyplot as plt
 from PIL import ImageTk, Image
 import random
+import evolutionary
 import os
 
 
@@ -173,21 +174,21 @@ def choice_database(char):
             returns the vector according to the user's selection.
     """
     if char["woman"] and char["young"] and char["straight"]:
-        return 'images/img_female_young_straight.csv.npy'
+        return 'img_female_young_straight.csv.npy'
     if char["woman"] and char["young"] and char["no_straight"]:
-        return 'images/img_female_young_wavy.csv.npy'
+        return 'img_female_young_wavy.csv.npy'
     if char["woman"] and char["old"] and char["straight"]:
-        return 'images/img_female_old_straight.csv.npy'
+        return 'img_female_old_straight.csv.npy'
     if char["woman"] and char["old"] and char["no_straight"]:
-        return 'images/img_female_old_wavy.csv.npy'
+        return 'img_female_old_wavy.csv.npy'
     if char["man"] and char["young"] and char["beard"]:
-        return 'images/img_male_young_beard.csv.npy'
+        return 'img_male_young_beard.csv.npy'
     if char["man"] and char["young"] and char["no_beard"]:
-        return 'images/img_male_young_nobeard.csv.npy'
+        return 'img_male_young_nobeard.csv.npy'
     if char["man"] and char["old"] and char["beard"]:
-        return 'images/img_male_old_beard.csv.npy'
+        return 'img_male_old_beard.csv.npy'
     if char["man"] and char["old"] and char["no_beard"]:
-        return 'images/img_male_old_nobeard.csv.npy'
+        return 'img_male_old_nobeard.csv.npy'
     else :
         print('Im in else')
         return None
@@ -445,7 +446,7 @@ if __name__=="__main__" :
     from keras.models import load_model
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-    decoder = load_model("model/decodeur.h5")
+    decoder = load_model("decodeur.h5")
 
 
     #First Window

@@ -158,7 +158,7 @@ if __name__=="__main__" :
     # We create the decoder model
     Decodeur = Model(encoded, decoded)
     Decodeur.compile(optimizer='adam', loss='mse')
-    Decodeur.save("model/decodeur.h5")
+    Decodeur.save("decodeur.h5")
 
     #######################################################################################################
 
@@ -168,7 +168,7 @@ if __name__=="__main__" :
 
     get_encoded_X = Model(inputs=autoencoder.input, outputs=autoencoder.get_layer("CODE").output)
     get_encoded_X.compile(optimizer='adam', loss='mse')
-    get_encoded_X.save("model/encodeur.h5")
+    get_encoded_X.save("encodeur.h5")
     encoded = get_encoded_X.predict(X_test)
     print(len(X_test))
     print(np.shape(encoded))
